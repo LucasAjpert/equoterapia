@@ -3349,6 +3349,13 @@ export function DocumentosPage() {
                   { tipo: 'doença', cor: '#ec4899' },
                   { tipo: 'transtorno patológica invisível', cor: '#6366f1' },
                   { tipo: 'sem resposta nervosa ou motora', cor: '#22c55e' },
+                  { tipo: 'sensibilidade', cor: '#14b8a6' }, 
+                  { tipo: 'dor', cor: '#b91c1c' },           
+                  { tipo: 'reflexo', cor: '#8b5cf6' },       
+                  { tipo: 'hipotonia', cor: '#38bdf8' },     
+                  { tipo: 'hipertonia', cor: '#f43f5e' },    
+                  { tipo: 'força', cor: '#16a34a' },         
+                  { tipo: 'outros', cor: '#94a3b8' },
                 ].map(({ tipo, cor }) => (
                   <button
                     key={tipo}
