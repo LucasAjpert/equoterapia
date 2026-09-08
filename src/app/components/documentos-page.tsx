@@ -982,6 +982,7 @@ export function DocumentosPage() {
 
     // Resetar dados do estudo de caso
     setEstudoCasoData({
+      ...estudoCasoData,
       nomePraticante: '',
       idade: '',
       dataNascimento: '',
@@ -995,7 +996,7 @@ export function DocumentosPage() {
       peso: '',
       ortesesProteses: [],
       marcacoesOrtese: {},
-      marcacoesFisica: {},
+      marcacoesFisica: [],
     });
   };
 
@@ -1968,8 +1969,8 @@ export function DocumentosPage() {
                                 const marcacao = estudoCasoData.marcacoesOrtese[parte.nome] || { ortese: false, protese: false };
                                 if (!marcacao.ortese && !marcacao.protese) return null;
 
-                                const cx = parte.cx || parte.x + (parte.width || 0) / 2;
-                                const cy = parte.cy || parte.y + (parte.height || 0) / 2;
+                                const cx = parte.cx || (parte.x || 0) + (parte.width || 0) / 2;
+                                const cy = parte.cy || (parte.y || 0) + (parte.height || 0) / 2;  
 
                                 if (marcacao.ortese && marcacao.protese) {
                                   return (
@@ -2129,6 +2130,34 @@ export function DocumentosPage() {
                           <div className="w-3 h-3 rounded-full bg-green-500"></div>
                           <span>Sem resposta</span>
                         </div>
+                        <div className="flex items-center gap-1">
+                        <div className="w-3 h-3 rounded-full bg-teal-500"></div>
+                        <span>Sensibilidade</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-3 h-3 rounded-full bg-rose-600"></div>
+                          <span>Dor</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-3 h-3 rounded-full bg-cyan-500"></div>
+                          <span>Reflexo</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-3 h-3 rounded-full bg-lime-500"></div>
+                          <span>Hipotonia</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-3 h-3 rounded-full bg-emerald-600"></div>
+                          <span>Hipertonia</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-3 h-3 rounded-full bg-amber-600"></div>
+                          <span>Força</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-3 h-3 rounded-full bg-slate-600"></div>
+                          <span>Outros</span>
+                        </div>
                       </div>
 
                       {(() => {
@@ -2142,7 +2171,14 @@ export function DocumentosPage() {
                             'lesão': '#f97316',
                             'doença': '#ec4899',
                             'transtorno patológica invisível': '#6366f1',
-                            'sem resposta nervosa ou motora': '#22c55e'
+                            'sem resposta nervosa ou motora': '#22c55e',
+                            'sensibilidade': '#14b8a6', // Teal
+                            'dor': '#e11d48',          // Rose
+                            'reflexo': '#06b6d4',      // Cyan
+                            'hipotonia': '#84cc16',    // Lime
+                            'hipertonia': '#059669',   // Emerald
+                            'força': '#d97706',        // Amber
+                            'outros': '#475569'        // Slate
                           };
                           return cores[tipo] || '#22c55e';
                         };
@@ -3297,7 +3333,7 @@ export function DocumentosPage() {
               </div>
             </div>
 
-            <div className="px-6 py-4">
+            <div className="px-6 py-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
               <p className="text-sm text-gray-600 mb-4">
                 Parte selecionada: <span className="font-semibold">{parteCorpoSelecionada.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
               </p>
@@ -3313,6 +3349,13 @@ export function DocumentosPage() {
                   { tipo: 'doença', cor: '#ec4899' },
                   { tipo: 'transtorno patológica invisível', cor: '#6366f1' },
                   { tipo: 'sem resposta nervosa ou motora', cor: '#22c55e' },
+                  { tipo: 'sensibilidade', cor: '#14b8a6' }, 
+                  { tipo: 'dor', cor: '#b91c1c' },           
+                  { tipo: 'reflexo', cor: '#8b5cf6' },       
+                  { tipo: 'hipotonia', cor: '#38bdf8' },     
+                  { tipo: 'hipertonia', cor: '#f43f5e' },    
+                  { tipo: 'força', cor: '#16a34a' },         
+                  { tipo: 'outros', cor: '#94a3b8' },
                 ].map(({ tipo, cor }) => (
                   <button
                     key={tipo}

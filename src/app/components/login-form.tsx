@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { User, Lock, Eye, EyeOff } from 'lucide-react';
-import logoImage from 'figma:asset/97c9b82470647ad9dacd0d17ab3d6cb78d90c1e0.png';
+import logoImage from '../../assets/logo-equociencias.png';
 
 export function LoginForm({ onLoginSuccess }: { onLoginSuccess: () => void }) {
   const [username, setUsername] = useState('');
