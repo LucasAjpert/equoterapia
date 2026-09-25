@@ -1,11 +1,21 @@
 import { useState } from 'react';
 import { Save, X, Upload, Users, FileText } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
 
 export function ColaboradorPage() {
   const [fotoColaborador, setFotoColaborador] = useState<string | null>(null);
   const [documentoAnexo, setDocumentoAnexo] = useState<string | null>(null);
   const [seguroPdf, setSeguroPdf] = useState<string | null>(null);
   const [seguroPdfNome, setSeguroPdfNome] = useState<string>('');
+
+  const [exames, setExames] = useState<any[]>([]);
+  const [exameFile, setExameFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
     nomeColaborador: '',
@@ -105,6 +115,18 @@ export function ColaboradorPage() {
           <p className="text-gray-600 text-sm md:text-base">Gerencie as informações dos colaboradores</p>
         </div>
 
+
+        {/* 1. ADICIONE AS ABAS AQUI NA LINHA 116 */}
+        <Tabs defaultValue="dados" className="w-full">
+          <TabsList className="mb-6 grid w-full grid-cols-2 md:w-[400px]">
+            <TabsTrigger value="dados">Dados do Colaborador</TabsTrigger>
+            <TabsTrigger value="exames">Exames e Atestados</TabsTrigger>
+          </TabsList>
+
+          {/* 2. ABRE A ABA DE DADOS */}
+          <TabsContent value="dados">
+
+            {/* SEU CÓDIGO CONTINUA INTACTO ABAIXO A PARTIR DA LINHA 117 */}
         <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
             {/* Coluna Esquerda */}
@@ -514,8 +536,7 @@ export function ColaboradorPage() {
                 </div>
               )}
             </div>
-          </div>
-
+          </div>          
           {/* Botões de Ação */}
           <div className="flex gap-4 justify-end mt-8 pt-6 border-t border-gray-200">
             <button
@@ -534,6 +555,104 @@ export function ColaboradorPage() {
             </button>
           </div>
         </div>
+      </TabsContent>
+        {/* ABA 2: EXAMES E ATESTADOS */}
+        <TabsContent value="exames">
+          <Card>
+            <CardHeader>
+              <CardTitle>Exames, Atestados e Relatórios</CardTitle>
+              <CardDescription>Anexe exames médicos, atestados ou relatórios de intercorrência do colaborador.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              
+              {/* Formulário de Novo Exame/Atestado */}
+              <form className="grid gap-4 md:grid-cols-2 items-start bg-white p-6 rounded-lg border shadow-sm">
+                <div className="space-y-2">
+                  <Label htmlFor="tipoExame">Tipo do Documento / Exame <span className="text-red-500">*</span></Label>
+                  <Input id="tipoExame" placeholder="Ex: Hemograma, Raio-X, Atestado Médico" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="dataExame">Data <span className="text-red-500">*</span></Label>
+                  <Input id="dataExame" type="date" />
+                </div>
+                
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="obsExame">Observações <span className="text-red-500">*</span></Label>
+                  <Textarea id="obsExame" placeholder="Descreva os detalhes sobre o exame ou intercorrência..." rows={3} />
+                </div>
+
+                {/* Área de Upload de Arquivo */}
+                <div className="space-y-2 md:col-span-2 mt-2">
+                  <Label>Anexo do Exame/Atestado <span className="text-red-500">*</span></Label>
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                    <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                    <span className="text-sm text-gray-600">Clique para selecionar o arquivo</span>
+                    <span className="text-xs text-gray-400 mt-1">PDF, JPG, JPEG ou PNG</span>
+                    <input 
+                      type="file" 
+                      className="hidden" 
+                      accept=".pdf, image/jpeg, image/png, image/jpg" 
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files.length > 0) {
+                          setExameFile(e.target.files[0]);
+                        }
+                      }}
+                    />
+                  </label>
+                  {exameFile && (
+                    <p className="text-sm text-green-600 font-medium mt-2 flex items-center gap-2">
+                      <FileText className="w-4 h-4" /> Arquivo selecionado: {exameFile.name}
+                    </p>
+                  )}
+                </div>
+
+                <div className="md:col-span-2 flex justify-end mt-4 pt-4 border-t border-gray-100">
+                  <Button type="button" className="bg-indigo-600 hover:bg-indigo-700 text-white px-6">
+                    <Save className="w-4 h-4 mr-2" />
+                    Salvar Exame
+                  </Button>
+                </div>
+              </form>
+
+              {/* Tabela de Listagem de Exames */}
+              <div className="rounded-md border mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Data</TableHead>
+                      <TableHead>Tipo de Documento</TableHead>
+                      <TableHead>Observações</TableHead>
+                      <TableHead className="text-right">Anexo</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {exames.length > 0 ? (
+                      exames.map((item: any, index: number) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-medium">
+                            {new Date(item.data).toLocaleDateString('pt-BR')}
+                          </TableCell>
+                          <TableCell>{item.tipo}</TableCell>
+                          <TableCell className="max-w-[200px] truncate" title={item.obs}>{item.obs}</TableCell>
+                          <TableCell className="text-right text-indigo-600 font-medium cursor-pointer hover:underline">
+                            Ver arquivo
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={4} className="text-center text-muted-foreground h-24">
+                          Nenhum exame ou atestado registrado.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>  
       </div>
     </div>
   );
