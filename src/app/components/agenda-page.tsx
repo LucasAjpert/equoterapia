@@ -150,7 +150,7 @@ export function AgendaPage({ onHideSidebar, onNotificacoesClick, pendenciasCount
     { id: 17, titulo: 'Henry Pavão', praticante: 'HENRY N. PAVÃO', horario: '09:00', tipo: 'atendimento', color: 'bg-green-400', mediador: 'Mônica', equino: 'Estrela', dia: 20 },
     { id: 18, titulo: 'Giovana Paniago', praticante: 'GIOVANA PANIAGO', horario: '11:30', tipo: 'atendimento', color: 'bg-purple-400', mediador: 'Gabriel', equino: 'Mel', dia: 20 },
 
-    { id: 19, titulo: 'Avaliação Inicial', horario: '10:00', tipo: 'avaliacao', color: 'bg-red-400', dia: 26 },
+    { id: 19, titulo: 'Avaliação Inicial Estrutural', horario: '10:00', tipo: 'avaliacao', color: 'bg-red-400', dia: 26 },
     { id: 20, titulo: 'Hiago Ayla', praticante: 'HIAGO FÉLIX AYLA', horario: '14:00', tipo: 'atendimento', color: 'bg-pink-400', mediador: 'Silvana', equino: 'Apolo', dia: 26 },
 
     { id: 21, titulo: 'Ângelo Peres', praticante: 'ÂNGELO MIGUEL PERES', horario: '08:30', tipo: 'atendimento', color: 'bg-yellow-400', mediador: 'Carol', equino: 'Trovão', dia: 27 },
@@ -576,7 +576,7 @@ export function AgendaPage({ onHideSidebar, onNotificacoesClick, pendenciasCount
                     <option value="facultativo">Facultativo</option>
                     <option value="formacao">Formação</option>
                     <option value="estudo-caso">Estudo de Caso</option>
-                    <option value="avaliacao-inicial">Avaliação Inicial</option>
+                    <option value="avaliacao-inicial-estrutural">Avaliação Inicial Estrutural</option>
                     <option value="atividade-internas">Atividade Internas</option>
                   </select>
                 </div>

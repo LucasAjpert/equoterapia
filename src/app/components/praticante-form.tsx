@@ -779,7 +779,7 @@ export function PraticanteForm() {
                         <FileText className="w-5 h-5 text-indigo-600" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-gray-900 mb-1">Avaliação inicial</h4>
+                        <h4 className="text-gray-900 mb-1">Avaliação inicial estrutural</h4>
                         <p className="text-sm text-gray-600 mb-2">João Silva</p>
                         <div className="flex flex-wrap gap-2 mb-2">
                           <span className="inline-flex items-center px-2 py-1 rounded-md text-xs bg-indigo-50 text-indigo-700 border border-indigo-200">
@@ -795,7 +795,7 @@ export function PraticanteForm() {
                     <button 
                       onClick={() => setDocumentoAberto({
                         id: '1',
-                        tipo: 'Avaliação inicial',
+                        tipo: 'Avaliação inicial estrutural',
                         praticante: 'João Silva',
                         colaboradores: ['Ana Silva - Fisioterapeuta', 'Carlos Santos - Psicólogo'],
                         dataGeracao: '15/12/2024',

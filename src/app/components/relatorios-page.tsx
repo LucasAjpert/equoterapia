@@ -139,7 +139,7 @@ export function RelatoriosPage() {
       { id: 3, data: '19/01/2024', praticante: 'GIOVANA PANIAGO', mediador: 'Lillian', duracao: '40 min', observacao: 'Excelente participação' },
     ],
     exames: [
-      { id: 1, praticante: 'FELIPE PEIXOTO', tipo: 'Avaliação Inicial', data: '10/03/2023', resultado: 'Aprovado' },
+      { id: 1, praticante: 'FELIPE PEIXOTO', tipo: 'Avaliação Inicial Estrutural', data: '10/03/2023', resultado: 'Aprovado' },
       { id: 2, praticante: 'HENRY N. PAVÃO', tipo: 'Reavaliação Semestral', data: '15/10/2023', resultado: 'Em progresso' },
       { id: 3, praticante: 'GIOVANA PANIAGO', tipo: 'Avaliação Trimestral', data: '20/08/2023', resultado: 'Aprovado' },
     ],
