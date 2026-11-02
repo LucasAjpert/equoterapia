@@ -333,7 +333,7 @@ const tiposDocumento = [
   'Relatório semestral',
   'Mediador inicial',
   'Mudança de mediação',
-  'Mudança de programa',
+  'Mudança de programa e horário',
   'Reavaliação',
   'Alta',
   'Atestado de Comparecimento',
@@ -666,7 +666,7 @@ export function DocumentosPage() {
 
   // Estados para o modal de Mudança de Programa
   const [showMudancaProgramaModal, setShowMudancaProgramaModal] = useState(false);
-  const [mudancaProgramaData, setMudancaProgramaData] = useState<MudancaProgramaData>({
+  const [mudancaProgramaData, setMudancaProgramaData] = useState<any>({
     nomePraticante: '',
     tipoDocumento: '',
     cid: '',
@@ -682,6 +682,12 @@ export function DocumentosPage() {
       outros: false,
     },
     outrosMotivo: '',
+    // NOVOS CAMPOS PARA HORÁRIO:
+    diaAtual: '',
+    horarioAtual: '',
+    novoDia: '',
+    novoHorario: '',
+    motivoHorario: ''
   });
 
   // Estados para o modal de Alta
@@ -946,7 +952,7 @@ export function DocumentosPage() {
     }
 
     // Se for Mudança de Programa, abre o modal específico
-    if (tipoSelecionado === 'Mudança de programa') {
+    if (tipoSelecionado === 'Mudança de programa e horário') {
       // Preencher dados automáticos (simulados aqui)
       const dataNasc = '15/03/1995'; // Deve vir do banco de dados
       const hoje = new Date();
@@ -955,7 +961,7 @@ export function DocumentosPage() {
 
       setMudancaProgramaData({
         nomePraticante: pratcicanteNome,
-        tipoDocumento: 'Mudança de programa',
+        tipoDocumento: 'Mudança de programa e horário',
         cid: 'F84.0', // Deve vir do banco de dados
         idade: String(idade),
         programaAtual: 'Hipoterapia', // Deve vir do banco de dados
@@ -1213,18 +1219,12 @@ export function DocumentosPage() {
   const handleSalvarMudancaPrograma = () => {
     const novoDocumento: Documento = {
       id: String(documentos.length + 1),
-      tipo: 'Mudança de programa',
+      tipo: 'Mudança de programa e horário',
       praticante: mudancaProgramaData.nomePraticante,
       colaboradores: [],
       dataGeracao: new Date().toLocaleDateString('pt-BR'),
     };
 
-    setDocumentos([novoDocumento, ...documentos]);
-    setShowMudancaProgramaModal(false);
-    setTipoSelecionado('');
-    setPraticanteNome('');
-    
-    // Resetar dados da mudança de programa
     setMudancaProgramaData({
       nomePraticante: '',
       tipoDocumento: '',
@@ -1241,6 +1241,11 @@ export function DocumentosPage() {
         outros: false,
       },
       outrosMotivo: '',
+      diaAtual: '',
+      horarioAtual: '',
+      novoDia: '',
+      novoHorario: '',
+      motivoHorario: ''
     });
   };
 
@@ -4450,7 +4455,7 @@ export function DocumentosPage() {
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl my-8">
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-xl">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl text-gray-900">Formulário de Mudança de Programa</h2>
+                <h2 className="text-2xl text-gray-900">Mudança de Programa e Horário</h2>
                 <button
                   onClick={() => setShowMudancaProgramaModal(false)}
                   className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -4629,6 +4634,68 @@ export function DocumentosPage() {
                     />
                   </div>
                 )}
+
+                {/* SECÇÃO: MUDANÇA DE HORÁRIO */}
+                <section className="bg-blue-50/30 p-5 rounded-xl border border-blue-100 mb-6 mt-4">
+                  <h3 className="text-lg font-bold text-blue-800 mb-4 pb-2 border-b border-blue-200">
+                    Mudança de Horário / Dia
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                    {/* Horário Atual */}
+                    <div className="space-y-3 bg-white p-4 rounded-lg border border-gray-200">
+                      <h4 className="font-semibold text-gray-600 text-sm uppercase tracking-wider">Horário Atual</h4>
+                      <div>
+                        <Label className="text-gray-700 mb-1 block">Dia da Semana</Label>
+                        <Input 
+                          placeholder="Ex: Segunda-feira"
+                          value={mudancaProgramaData.diaAtual || ''}
+                          onChange={(e) => setMudancaProgramaData({...mudancaProgramaData, diaAtual: e.target.value})}
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-700 mb-1 block">Horário</Label>
+                        <Input 
+                          type="time"
+                          value={mudancaProgramaData.horarioAtual || ''}
+                          onChange={(e) => setMudancaProgramaData({...mudancaProgramaData, horarioAtual: e.target.value})}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Novo Horário */}
+                    <div className="space-y-3 bg-white p-4 rounded-lg border border-blue-300 shadow-sm">
+                      <h4 className="font-semibold text-blue-600 text-sm uppercase tracking-wider">Novo Horário</h4>
+                      <div>
+                        <Label className="text-gray-700 mb-1 block">Novo Dia da Semana</Label>
+                        <Input 
+                          placeholder="Ex: Quarta-feira"
+                          value={mudancaProgramaData.novoDia || ''}
+                          onChange={(e) => setMudancaProgramaData({...mudancaProgramaData, novoDia: e.target.value})}
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-700 mb-1 block">Novo Horário</Label>
+                        <Input 
+                          type="time"
+                          value={mudancaProgramaData.novoHorario || ''}
+                          onChange={(e) => setMudancaProgramaData({...mudancaProgramaData, novoHorario: e.target.value})}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Motivo da Mudança de Horário */}
+                  <div>
+                    <Label className="text-gray-700 mb-1 block">Motivo da Mudança de Horário</Label>
+                    <Textarea 
+                      rows={2}
+                      placeholder="Ex: Conflito com horário escolar, pedido dos pais..."
+                      value={mudancaProgramaData.motivoHorario || ''}
+                      onChange={(e) => setMudancaProgramaData({...mudancaProgramaData, motivoHorario: e.target.value})}
+                    />
+                  </div>
+                </section>
               </div>
             </div>
 
@@ -4647,7 +4714,7 @@ export function DocumentosPage() {
                   className="bg-indigo-600 hover:bg-indigo-700 px-6"
                 >
                   <FileText className="h-4 w-4 mr-2" />
-                  Salvar Mudança de Programa
+                  Salvar Mudança
                 </Button>
               </div>
             </div>
